@@ -14,7 +14,7 @@
           :selected="object2"
           v-on:updateOption="methodToRunOnSelect"
           :placeholder="'Select an Item'"
-          :closeOnOutsideClick="boolean"
+          :closeOnOutsideClick="true"
         >
         </dropdown>
       </div>
@@ -31,7 +31,7 @@
         <input v-model="Marca" placeholder="Marca" />
       </div>
       <div class="formulary">
-        <div class="label">Modulo</div>
+        <div class="label">Modelo</div>
         <input v-model="Modulo" placeholder="Modulo" />
       </div>
 
@@ -49,7 +49,7 @@
 
 <script>
 import dropdown from "vue-dropdowns";
-
+import axios from "axios";
 export default {
   components: { dropdown },
   data() {
@@ -60,19 +60,40 @@ export default {
       Marca: "",
       Modulo: "",
       checked: false,
-      opcionestipo: [{ name: "xd" }, { name: "otra cosa" }],
+      opcionestipo: [],
       object2: {
         name: "Tipo Equipo",
+        id:0
       },
     };
   },
   methods: {
     methodToRunOnSelect(payload) {
-      this.object = payload;
+      this.object2 = payload;
     },
     getdb() {
-      console.log("hola");
-    },
+      if(this.checked){
+      const creation = {
+        EQP_PLACA: this.Placa,
+        EQP_MARCA: this.Marca,
+        EQP_MODELO: this.Modulo,
+        EQP_NAME: this.NombreEquipo,
+        EQT_ID: this.object2.id,
+        usId: this.document,
+      };
+
+      axios
+        .post("http://localhost:3500/EQ", creation)
+        .then((response) => console.log(response));
+    }},
+  },
+  created() {
+    axios.get("http://localhost:3500/EQT").then((response) => {
+      response.data.forEach(element => {
+        this.opcionestipo.push({"name":element.EQT_DESCRIPCION,"id":element.EQT_ID});
+      });
+      console.log(this.opcionestipo);
+    });
   },
 };
 </script>
