@@ -5,3 +5,5 @@ const DEPDEPENDENCIA = function(depdependencia) {
   this.DEP_CODIGO = depdependencia.DEP_CODIGO;
   this.DEP_DESCRIPCION = depdependencia.DEP_DESCRIPCION;
 };
+
+module.exports = DEPDEPENDENCIA;

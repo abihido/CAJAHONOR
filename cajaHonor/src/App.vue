@@ -14,8 +14,6 @@ import HelloWorld from '@/components/HelloWorld.vue'
 #app {
   width: 100vw;
   height: 100vh;
-  margin: 0 auto;
-  padding: 2rem;
   background-color: black;
   font-weight: normal;
 
@@ -39,14 +37,6 @@ a,
   transition: 0.4s;
 }
 
-
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
 nav a.router-link-exact-active {
   color: var(--color-text);

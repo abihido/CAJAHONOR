@@ -1,12 +1,16 @@
 <template>
   <div id="homeBody">
+    <div id="header">
+        <img id="logoMin" src="../assets/logoMNSDEF.png"/>
+        <img id="logoCH" src="../assets/logoCH.png"/>  
+    </div>
     <div id="moduleBack">
-      <div class="formulary">
+      <div class="formulary rowFormulary">
         <div class="label">Cedula</div>
         <input v-model="document" placeholder="Cedula" />
       </div>
 
-      <div class="formulary">
+      <div class="formulary rowFormulary">
         <div class="label">Tipo de Equipo</div>
         <dropdown
           class="my-dropdown-toggle"
@@ -18,19 +22,19 @@
         >
         </dropdown>
       </div>
-      <div class="formulary">
+      <div class="formulary rowFormulary">
         <div class="label">Placa</div>
         <input v-model="Placa" placeholder="Placa" />
       </div>
-      <div class="formulary">
+      <div class="formulary rowFormulary">
         <div class="label">Nombre Equipo</div>
         <input v-model="NombreEquipo" placeholder="NombreEquipo" />
       </div>
-      <div class="formulary">
+      <div class="formulary rowFormulary">
         <div class="label">Marca</div>
         <input v-model="Marca" placeholder="Marca" />
       </div>
-      <div class="formulary">
+      <div class="formulary rowFormulary">
         <div class="label">Modelo</div>
         <input v-model="Modulo" placeholder="Modulo" />
       </div>
@@ -63,7 +67,7 @@ export default {
       opcionestipo: [],
       object2: {
         name: "Tipo Equipo",
-        id:0
+        id: 0,
       },
     };
   },
@@ -72,25 +76,29 @@ export default {
       this.object2 = payload;
     },
     getdb() {
-      if(this.checked){
-      const creation = {
-        EQP_PLACA: this.Placa,
-        EQP_MARCA: this.Marca,
-        EQP_MODELO: this.Modulo,
-        EQP_NAME: this.NombreEquipo,
-        EQT_ID: this.object2.id,
-        usId: this.document,
-      };
+      if (this.checked) {
+        const creation = {
+          EQP_PLACA: this.Placa,
+          EQP_MARCA: this.Marca,
+          EQP_MODELO: this.Modulo,
+          EQP_NAME: this.NombreEquipo,
+          EQT_ID: this.object2.id,
+          usId: this.document,
+        };
 
-      axios
-        .post("http://localhost:3500/EQ", creation)
-        .then((response) => console.log(response));
-    }},
+        axios
+          .post("http://localhost:3500/EQ", creation)
+          .then((response) => console.log(response));
+      }
+    },
   },
   created() {
     axios.get("http://localhost:3500/EQT").then((response) => {
-      response.data.forEach(element => {
-        this.opcionestipo.push({"name":element.EQT_DESCRIPCION,"id":element.EQT_ID});
+      response.data.forEach((element) => {
+        this.opcionestipo.push({
+          name: element.EQT_DESCRIPCION,
+          id: element.EQT_ID,
+        });
       });
       console.log(this.opcionestipo);
     });
@@ -115,14 +123,26 @@ export default {
 }
 
 #moduleBack {
-  background-color: rgb(232, 234, 236, 0.8);
+  margin: 0 3vw 5vh 0;
+  background-color: rgb(255, 255, 255, 0.85);
+  padding: 3vh 0 3vh 0;
+  border-radius: 1vw;
+  color: black;
+  width: 40vw;
 
-  width: 50vw;
-  min-height: 85vh;
 }
 #homeBody {
   display: flex;
-  justify-content: center;
+  flex-flow: column;
+  justify-content: top;
+  align-items: end;
+  width: 100%;
+  height: 100%;
+  /*background: url('..\images\mainBackground.jpeg') no-repeat center center fixed;*/
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .label {
@@ -135,10 +155,39 @@ export default {
   flex-flow: row;
   justify-content: center;
   align-items: center;
+  padding: 0 5vw 0 5vw;
+  
 }
+
+.rowFormulary{
+
+  justify-content: space-between !important;
+
+}
+
+
 
 #sender {
   font-size: 2vw;
   margin: 1vw;
+  border-radius: 1vh;
+}
+
+#header{
+  background-color: white;
+  margin-bottom: 6vh ;
+  width: 100%;
+  padding: 1.5vh;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+
+#logoMin{
+  padding-left: 2vw;
+}
+
+#logoCH{
+  padding-right: 2vw;
 }
 </style>
