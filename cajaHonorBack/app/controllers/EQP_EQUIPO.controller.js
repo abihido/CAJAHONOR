@@ -1,6 +1,8 @@
 const EQP_EQUIPO = require("../models/EQP_EQUIPO.model.js");
 const USU_USUARIO = require("../models/USU_USUARIO.model.js");
 const EQU_EQUIPO_USUARIO = require("../models/EQU_EQUIPO_USUARIO.model.js");
+var dateTime = require('node-datetime')
+var dt = dateTime.create();
 
 exports.findAll = (req, res) => {
     EQP_EQUIPO.getAll((err, data) => {
@@ -18,7 +20,7 @@ exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
         res.status(400).send({
-            message: "Content can not be empty!"
+            message: "Porfavor llene todos los campos!"
         });
     }
 
@@ -26,11 +28,11 @@ exports.create = (req, res) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found USER with id ${req.params.id}.`
+                    message: `No se encontro un usuario con la cedula ${req.params.id}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving USER with id " + req.params.id
+                    message: "Error buscando al usuario con cedula : " + req.params.id
                 });
             }
         } else {
@@ -45,17 +47,27 @@ exports.create = (req, res) => {
             });
             // Save Tutorial in the database
             EQP_EQUIPO.create(tutorial, (err, data) => {
-                if (err)
-                    res.status(500).send({
-                        message:
-                            err.message || "Some error occurred while creating the EQP_EQUIPO."
-                    });
+                if (err) {
+                    if (err.code = "ER_DUP_ENTRY") {
+
+                        res.status(500).send({
+                            message:
+                                "Esta placa ya pertenece a otro equipo"
+                        });
+                    }
+                    else {
+                        res.status(500).send({
+                            message:
+                                err.message || "La placa del equipo se encuentra repetida."
+                        });
+                    }
+                }
                 else {
 
                     const unionTable = new EQU_EQUIPO_USUARIO({
                         USU_ID: dataus.USU_ID,
                         EQP_ID: data.id,
-                        FECHA: new Date().getDate()
+                        FECHA: dt
                     });
 
                     EQU_EQUIPO_USUARIO.create(unionTable, (err, dataeq) => {

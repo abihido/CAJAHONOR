@@ -1,8 +1,8 @@
 <template>
   <div id="homeBody">
     <div id="header">
-        <img id="logoMin" src="../assets/logoMNSDEF.png"/>
-        <img id="logoCH" src="../assets/logoCH.png"/>  
+      <img id="logoMin" src="../assets/logoMNSDEF.png" />
+      <img id="logoCH" src="../assets/logoCH.png" />
     </div>
     <div id="moduleBack">
       <div class="formulary rowFormulary">
@@ -54,6 +54,7 @@
 <script>
 import dropdown from "vue-dropdowns";
 import axios from "axios";
+import swal from "sweetalert";
 export default {
   components: { dropdown },
   data() {
@@ -88,7 +89,28 @@ export default {
 
         axios
           .post("http://localhost:3500/EQ", creation)
-          .then((response) => console.log(response));
+          .then((response) => {
+            if (response.status > 200) {
+              swal("ERROR", response.data.message, "error");
+            } else {
+              swal(
+                "¡Equipo Asociado!",
+                "El equipo ha sido asociado al usuario",
+                "success"
+              );
+            }
+
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+           /* if (err.response.status == 500) {
+              swal("ERROR", "Esta placa ya pertenece a otro equipo", "error");
+            } else {
+              swal("ERROR", err.response.data.message, "error");
+            }*/
+            swal("ERROR", err.response.data.message, "error");
+          });
       }
     },
   },
@@ -129,7 +151,6 @@ export default {
   border-radius: 1vw;
   color: black;
   width: 40vw;
-
 }
 #homeBody {
   display: flex;
@@ -156,16 +177,11 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 0 5vw 0 5vw;
-  
 }
 
-.rowFormulary{
-
+.rowFormulary {
   justify-content: space-between !important;
-
 }
-
-
 
 #sender {
   font-size: 2vw;
@@ -173,21 +189,21 @@ export default {
   border-radius: 1vh;
 }
 
-#header{
+#header {
   background-color: white;
-  margin-bottom: 6vh ;
+  margin-bottom: 6vh;
   width: 100%;
   padding: 1.5vh;
   display: flex;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
 }
 
-#logoMin{
+#logoMin {
   padding-left: 2vw;
 }
 
-#logoCH{
+#logoCH {
   padding-right: 2vw;
 }
 </style>
