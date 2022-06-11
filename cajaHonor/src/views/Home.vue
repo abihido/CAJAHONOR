@@ -78,6 +78,12 @@ export default {
     },
     getdb() {
       if (this.checked) {
+
+        if(this.Placa==""|| this.document=="" || this.object2.id==0){
+          swal("ERROR", "Rellene los campos", "error");
+        }
+
+
         const creation = {
           EQP_PLACA: this.Placa,
           EQP_MARCA: this.Marca,
@@ -111,6 +117,9 @@ export default {
             }*/
             swal("ERROR", err.response.data.message, "error");
           });
+      }
+      else{
+        swal( "recuerda oprimir el cuadro de confirmacion" );
       }
     },
   },
@@ -159,7 +168,7 @@ export default {
   align-items: end;
   width: 100%;
   height: 100%;
-  /*background: url('..\images\mainBackground.jpeg') no-repeat center center fixed;*/
+  background: url('..\images\back.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -187,6 +196,8 @@ export default {
   font-size: 2vw;
   margin: 1vw;
   border-radius: 1vh;
+  color:  white;
+  background: rgb(24,2,148) ;
 }
 
 #header {
