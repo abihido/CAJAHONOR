@@ -94,7 +94,7 @@ export default {
         };
 
         axios
-          .post("http://localhost:3500/EQ", creation)
+          .post("http://18.117.189.191:3500/EQ", creation)
           .then((response) => {
             if (response.status > 200) {
               swal("ERROR", response.data.message, "error");
@@ -124,7 +124,7 @@ export default {
     },
   },
   created() {
-    axios.get("http://localhost:3500/EQT").then((response) => {
+    axios.get("http://18.117.189.191:3500/EQT").then((response) => {
       response.data.forEach((element) => {
         this.opcionestipo.push({
           name: element.EQT_DESCRIPCION,
