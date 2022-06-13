@@ -168,7 +168,7 @@ export default {
   align-items: end;
   width: 100%;
   height: 100%;
-  background: url('..\images\back.jpg') no-repeat center center fixed;
+  background: url('..\assets\back.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
